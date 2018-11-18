@@ -1,6 +1,6 @@
 author: WooWapDaBug
 
-type: lib
+#type: lib
 
 description: C++ intervals based on mgos_timers
 

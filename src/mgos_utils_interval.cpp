@@ -3,6 +3,7 @@
 #include <mgos_utils_interval.h>
 
 #include <functional>
+#include <memory>
 #include <mgos_timers.h>
 
 #define MGOS_TIMER_DO_ONCE false
@@ -19,12 +20,13 @@ namespace mgos_utils {
 
     void interval::start() {
         if (!running) {
+            running = true;
             id = mgos_set_timer(repeat_millis, MGOS_TIMER_DO_ONCE, [](void* this_interval) {
                 auto interval = reinterpret_cast<mgos_utils::interval*>(this_interval);
-                interval->function();
-                interval->start();
+                if (interval->running) interval->function(); 
+                // Check again as the called function might stop the interval
+                if (interval->running) interval->start();
             }, this);
-            running = true;
         } else {
             stop();
             start();
@@ -33,8 +35,8 @@ namespace mgos_utils {
 
     void interval::stop() {
         if (running) {
-            mgos_clear_timer(id);
             running = false;
+            mgos_clear_timer(id);
         }
     }
 
@@ -42,7 +44,6 @@ namespace mgos_utils {
         other.stop();
         function = other.function;
         repeat_millis = other.repeat_millis;
-        stop();
         start();
         return *this;
     }

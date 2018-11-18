@@ -1,8 +1,3 @@
-# Mongoose OS Intervals
-
-Example:
-
-```cpp
 #include <mgos.h>
 
 #include <mgos_utils_interval.h>
@@ -13,10 +8,10 @@ class interval_test {
         interval_test() {
             loop = mgos_utils::interval(500, [this](){
                 LOG(LL_INFO, ("Test interval v1 count %i", interval_count++));
-                if (interval_count > 10) {
+                if (interval_count > 5) {
                     loop = mgos_utils::interval(1000, [this]() {
                         LOG(LL_INFO, ("Test interval v2 count %i", interval_count++));
-                        if (interval_count > 15) {
+                        if (interval_count > 7) {
                             LOG(LL_INFO, ("Stop test interval"));
                             loop.stop();
                         }
@@ -37,4 +32,3 @@ extern "C" enum mgos_app_init_result mgos_app_init(void) {
 
     return MGOS_APP_INIT_SUCCESS;
 }
-```
