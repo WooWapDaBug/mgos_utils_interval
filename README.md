@@ -11,12 +11,12 @@ Example:
 class interval_test {
     public:
         interval_test() {
-            loop = mgos_utils::interval(1000, [this](){
+            loop = mgos_utils::interval(500, [this](){
                 LOG(LL_INFO, ("Test interval v1 count %i", interval_count++));
-                if(interval_count > 10) {
-                    loop = mgos_utils::interval(2000, [this]() {
+                if (interval_count > 5) {
+                    loop = mgos_utils::interval(1000, [this]() {
                         LOG(LL_INFO, ("Test interval v2 count %i", interval_count++));
-                        if(interval_count > 15) {
+                        if (interval_count > 8) {
                             LOG(LL_INFO, ("Stop test interval"));
                             loop.stop();
                         }
