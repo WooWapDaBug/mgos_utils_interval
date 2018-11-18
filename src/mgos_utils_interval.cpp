@@ -5,6 +5,8 @@
 #include <functional>
 #include <mgos_timers.h>
 
+#define MGOS_TIMER_DO_ONCE false
+
 namespace mgos_utils {
 
     using interval_function_t = std::function<void(void)>;
@@ -17,8 +19,10 @@ namespace mgos_utils {
 
     void interval::start() {
         if (!running) {
-            id = mgos_set_timer(repeat_millis, MGOS_TIMER_REPEAT, [](void* this_interval) {
-                reinterpret_cast<mgos_utils::interval*>(this_interval)->function();
+            id = mgos_set_timer(repeat_millis, MGOS_TIMER_DO_ONCE, [](void* this_interval) {
+                auto interval = reinterpret_cast<mgos_utils::interval*>(this_interval);
+                interval->function();
+                interval->start();
             }, this);
             running = true;
         } else {
