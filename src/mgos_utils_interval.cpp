@@ -19,18 +19,22 @@ namespace mgos_utils {
     }
 
     void interval::start() {
-        if (!running) {
-            running = true;
-            id = mgos_set_timer(repeat_millis, MGOS_TIMER_DO_ONCE, [](void* this_interval) {
-                auto interval = reinterpret_cast<mgos_utils::interval*>(this_interval);
-                if (interval->running) interval->function(); 
-                // Check again as the called function might stop the interval
-                if (interval->running) interval->start();
-            }, this);
-        } else {
-            stop();
+        if (running) { stop(); }
+        running = true;
+        id = mgos_set_timer(repeat_millis, MGOS_TIMER_DO_ONCE, [](void* this_interval) {
+            reinterpret_cast<interval*>(this_interval)->do_it();
+        }, this);
+    }
+
+    void interval::do_it() {
+        if (running && function) {
+            function(); 
+        }
+        // Check again as the called function might stop the interval
+        if (running) {
             start();
         }
+
     }
 
     void interval::stop() {

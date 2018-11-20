@@ -8,6 +8,9 @@ namespace mgos_utils {
         using interval_function_t = std::function<void(void)>;
         public:
             interval() = default;
+            interval(const interval&) = delete;
+            interval& operator=(const interval&) = delete;
+            interval(interval&&) = delete;
             interval& operator=(interval&& other);
             interval(int millis, interval_function_t f);
             void start();
@@ -15,6 +18,7 @@ namespace mgos_utils {
             ~interval();
         private:
             bool running = false;
+            void do_it();
             mgos_timer_id id;
             int repeat_millis;
             interval_function_t function;
