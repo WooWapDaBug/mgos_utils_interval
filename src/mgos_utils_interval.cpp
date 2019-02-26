@@ -21,6 +21,7 @@ namespace mgos_utils {
     void interval::start() {
         if (running) { stop(); }
         running = true;
+        LOG(LL_INFO, ("Interval STARTED"));
         id = mgos_set_timer(repeat_millis, MGOS_TIMER_DO_ONCE, [](void* this_interval) {
             reinterpret_cast<interval*>(this_interval)->do_it();
         }, this);
