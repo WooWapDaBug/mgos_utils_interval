@@ -5,6 +5,7 @@
 #include <functional>
 #include <memory>
 #include <mgos_timers.h>
+#include <string>
 
 #define MGOS_TIMER_DO_ONCE false
 
@@ -53,6 +54,7 @@ namespace mgos_utils {
 
     interval& interval::operator=(interval&& other) {
         other.stop();
+        name = other.name;
         function = other.function;
         repeat_millis = other.repeat_millis;
         start();
