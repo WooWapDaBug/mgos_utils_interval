@@ -39,10 +39,6 @@ namespace mgos_utils {
             LOG(LL_INFO, ("Interval %s ID Running: %i", this_interval->name.c_str(), this_interval->id));
             this_interval->do_it();
         }, this);
-
-        if(name != "") {
-            LOG(LL_INFO, ("Interval ID: %i", id));
-        }
     }
 
     void interval::do_it() {
