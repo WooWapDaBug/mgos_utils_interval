@@ -27,12 +27,13 @@ namespace mgos_utils {
     }
 
     void interval::start() {
+        if(name != "") {
+            LOG(LL_INFO, ("Interval STARTED %s - running: %b", name.c_str(), running));
+        }
         if (running) { 
-            LOG(LL_INFO, ("NOT RUUUNING %s", name.c_str()));
             stop(); 
         }
         running = true;
-        LOG(LL_INFO, ("Interval STARTED %s", name.c_str()));
         id = mgos_set_timer(repeat_millis, MGOS_TIMER_DO_ONCE, [](void* this_interval) {
             reinterpret_cast<interval*>(this_interval)->do_it();
         }, this);
