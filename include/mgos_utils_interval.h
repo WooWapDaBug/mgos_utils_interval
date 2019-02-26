@@ -14,6 +14,7 @@ namespace mgos_utils {
             interval(interval&&) = delete;
             interval& operator=(interval&& other);
             interval(int millis, interval_function_t f);
+            interval(std::string name, int millis, interval_function_t f);
             void start();
             void stop();
             ~interval();
