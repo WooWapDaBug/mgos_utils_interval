@@ -37,6 +37,10 @@ namespace mgos_utils {
         id = mgos_set_timer(repeat_millis, MGOS_TIMER_DO_ONCE, [](void* this_interval) {
             reinterpret_cast<interval*>(this_interval)->do_it();
         }, this);
+
+        if(name != "") {
+            LOG(LL_INFO, ("Interval ID: %i", id));
+        }
     }
 
     void interval::do_it() {
