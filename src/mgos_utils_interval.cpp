@@ -34,7 +34,7 @@ namespace mgos_utils {
             stop(); 
         }
         running = true;
-        id = mgos_set_timer(repeat_millis, MGOS_TIMER_DO_ONCE, [](void* user_data) {
+        id = mgos_set_timer(repeat_millis, MGOS_TIMER_REPEAT, [](void* user_data) {
             auto this_interval = reinterpret_cast<interval*>(user_data);
             LOG(LL_INFO, ("Interval %s ID Running: %i", this_interval->name.c_str(), this_interval->id));
             this_interval->do_it();
