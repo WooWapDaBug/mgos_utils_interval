@@ -18,10 +18,16 @@ namespace mgos_utils {
         start();
     }
 
+    interval::interval(std::string name, int millis, interval_function_t f) : 
+        repeat_millis(millis), function(f), name(name)
+    {
+        start();
+    }
+
     void interval::start() {
         if (running) { stop(); }
         running = true;
-        LOG(LL_INFO, ("Interval STARTED"));
+        LOG(LL_INFO, ("Interval STARTED %s", name.c_str()));
         id = mgos_set_timer(repeat_millis, MGOS_TIMER_DO_ONCE, [](void* this_interval) {
             reinterpret_cast<interval*>(this_interval)->do_it();
         }, this);

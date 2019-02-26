@@ -2,6 +2,7 @@
 
 #include <mgos_timers.h>
 #include <functional>
+#include <string>
 
 namespace mgos_utils {
     class interval {
@@ -17,6 +18,7 @@ namespace mgos_utils {
             void stop();
             ~interval();
         private:
+            std::string name = "";
             bool running = false;
             void do_it();
             mgos_timer_id id;
