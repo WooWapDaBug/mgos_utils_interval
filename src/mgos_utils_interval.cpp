@@ -20,8 +20,9 @@ namespace mgos_utils {
     }
 
     interval::interval(std::string name, int millis, interval_function_t f) : 
-        repeat_millis(millis), function(f), name(name)
+        repeat_millis(millis), function(f)
     {
+        this.name = name;
         start();
     }
 
