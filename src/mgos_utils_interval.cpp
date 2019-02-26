@@ -28,7 +28,7 @@ namespace mgos_utils {
 
     void interval::start() {
         if(name != "") {
-            LOG(LL_INFO, ("Interval STARTED %s - running: %b", name.c_str(), running));
+            LOG(LL_INFO, ("Interval STARTED %s - running: %i", name.c_str(), running));
         }
         if (running) { 
             stop(); 
